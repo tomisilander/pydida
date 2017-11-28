@@ -1,0 +1,5 @@
+# ACTUALLY YOU MAY AS WELL JUST RUN THIS BY "bash -v README"
+
+python ../pydida/dizo.py test/hepatitis.data -d ',' -m '?' -n GEN resdir
+
+# NOW THE resdir SHOULD CONTAIN THE RESULTS, ESPECIALLY vds AND dat

@@ -1,0 +1,9 @@
+hmm 
+- let din diz and dout store their command lines
+- think about the pre-analysis imputation etc.
+  -changes typ too
+
+- command syntax error checking
+- also varindex out of bound
+- error handling in general
+- css

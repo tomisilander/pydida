@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+<head>
+<title>Korita - data upload page</title>
+<link rel="stylesheet" type="text/css" href="korita.css" />
+</head>
+
+<h1> Welcome to Korita</h1>
+
+<body>
+
+<p>
+Korita is an on-line data discretization tool, built on the 
+pydida discretization package. It can also be used 
+as a simple format conversion tool.
+</p>
+
+<p>Korita consists of five simple steps:
+
+<ol>
+<li>Data upload (this page)</li>
+<li>Data format specification</li>
+<li>Discretization commands specification</li>
+<li>Output format specification</li> 
+<li>Data download</li>
+</ol>
+
+
+<h2>Data upload</h2>
+
+<p>
+Korita expects the data be in some sort of tabular ASCII format. The
+specific input format will be defined in step 2. First, however, the 
+data has to be uploaded to the server.
+</p>
+
+<form method="POST" 
+      action="/cgi-bin/dup.py"
+      enctype="multipart/form-data">
+<p>
+<label>Data file:</label>
+<br />
+<input name="datafile"
+       size="60"
+       type="file">
+</p>
+
+<p>
+<input name="submit"
+       type="submit"
+       value="Submit">
+</p>
+
+<h2> Command syntax: </h2>
+<p>
+<label>Variable range mark: </label><br />
+<input type="text" name="rng_mark" value=".." size="2"><br />
+<label>Variable (range) separator : </label><br />
+<input type="text" name="sep_mark" value="|" size="2"><br />
+<label>Variable vs. command separator: </label><br />
+<input type="text" name="var_cmd_sep" value="::" size="2"><br />
+<label>Command separator : </label><br />
+<input type="text" name="cmd_sep" value=";" size="2"><br />
+</p>
+
+<p>
+Example using the default syntax above :
+<pre> .. V4 | V8 | V9 .. V11 | V14 .. :: in; V20 :: out</pre>
+</p>
+</form>
+</body>
+</html>

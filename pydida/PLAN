@@ -1,0 +1,30 @@
+No need to be super fast
+Easy to use, somewhat powerful
+- but how to make it useful 
+  (declarative mini language maybe ?)
+
+Correct
+ - layers
+ - one internal representation and conversions later
+
+So organize by phases:
+
+HOWABOUT MAKING TEST CASES
+- which makes us think about the actual use
+
+- Syntactic format checking (tabularity)
+- Transposition to var per row
+- Conversion from separators to TABS
+- Split varnames and rest (if varnames in first row)
+- Gen varnames if necessary
+- Semantic format checking - i.e. varnames
+- Variable selection
+- Missing data reporting
+- Missing data to ''
+- Value range definition
+- Analysis - conversion cycle
+- Discretization
+- Imputation
+- Alphizing
+- Transposing
+- Adding varnames

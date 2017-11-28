@@ -1,0 +1,139 @@
+<HTML>
+
+<TITLE>Drool Phase 1</TITLE>
+
+<BODY>
+
+<FORM method="POST" action=/cgi-bin/handle.py
+      enctype="multipart/form-data">
+
+<H1> Phase 1: specifying the format of your data</H1>
+
+Data file:
+
+<INPUT name="datafile"
+       type="file">
+
+and after specifying the format below
+
+<INPUT name="submit"
+       type="submit"
+       value="Submit">
+
+<P> The data is expected to be in a tabular format ASCII file in which
+    columns are separated by some special separator character and each
+    column contains data (some of which can be marked as missing) for
+    one variable. (Alternatively, each row may contain data for each
+    variable.) Different line ending encodings (Windows, MAC, Unix)
+    are accepted.  The first line of the data file may contain the
+    variable names or the variable names can be automatically
+    generated or uploaded in a separate file.
+</P>
+
+<P>
+    As a result of this phase the data is converted to the tab-limited
+    format, one variable per (newline terminated) row in which missing
+    values are marked as empty strings and the data content is analysed
+    to form the basis for the next phase, the discretization.
+</P>
+
+
+<H2> Field separator</H2>
+
+<INPUT name="separator"
+       type="radio"
+       value="WS"
+       checked> white space
+<BR>
+<INPUT name="separator"
+       type="radio"
+       value="single"> single
+<INPUT name="sepchar"
+       type="text"
+       size=5
+       value="TAB">
+
+
+<H2> Variable names </H2>
+
+
+<INPUT name="names" 
+       type="radio" 
+       value="1"
+       checked> in a data file on 1st row
+<BR>
+<INPUT name="names" 
+       type="radio" 
+       value="GEN"> generate (starting from V
+
+<INPUT name="start"
+       type="text"
+       size=2
+       value="0">)
+<BR>
+<INPUT name="names" 
+       type="radio" 
+       value="file"> from file
+<INPUT name="vnfile"
+       type="file">
+ (one variable name per row)
+<BR>
+
+
+
+<H2> The mark for  missing values (if any)</H2>
+mark :
+<INPUT name="missing"
+       type="text"
+       size=5
+       value="">
+(leave empty for white space)
+
+
+<H2> Misc </H2>
+
+
+<INPUT name="rowise" 
+       type="checkbox" 
+       value="yes"> data is already in var/row format
+<BR>
+<INPUT name="discard_empty" 
+       type="checkbox" 
+       value="yes"
+       checked> discard lines containing whitespace only
+
+<H3>Variable processing command lines </H3>
+For leaving variables out of analysis and for specifying separate
+missing marker for different variables.
+<TABLE CELLPADDING=5>
+<TR>
+<TD>
+<TEXTAREA name=cmd
+          rows=10
+          cols=40>
+.. :: in
+
+</TEXTAREA>
+</TD>
+<TD>
+<TABLE>
+<TR>
+<TH align="left" colspan=2> Command line syntax: </TH>
+<TR><TD align="right">cmdline::= </TD>
+    <TD>ranges :: cmd</TD></TR>
+<TR><TD align="right">ranges::= </TD>
+    <TD> range (, range)*</TD></TR>
+<TR><TD align="right">range::= </TD>
+    <TD>var | [var] - [var]</TD></TR>
+<TR><TD align="right">var::= </TD>
+    <TD>variable name | variable index (from 0 on)</TD></TR>
+<TR><TD align="right">cmd::= </TD>
+    <TD>in | out | miss mark*</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+
+</FORM>
+</BODY>
+</HTML>

@@ -1,0 +1,99 @@
+Ok,
+it is a mess, I mean work in progress.
+
+- setup does not work
+- python2.4 is needed
+- Look at the examples-directory
+- Run "python2.4 pydida/dizo.py -h" to see the options
+- small letter option for input, capital letter options for output
+
+- use the source luke (even if it is not very clearly written)
+- there is preliminary cgi-interface in www-directory
+
+The dizo-options are mostly to control the input and output format.
+For discretization there is a minilanguage that is largely untested.
+The discretization commands can be given either with a commandline argument -c
+or in a file with -f option.
+
+The syntax of this minilanguage is (about) I'll give examples later:
+
+<program>    ::= <commandlist>
+<commadlist> ::= <command> [";" <command>]*
+<command>    ::= <selector> "::" <cmd> <args>
+<selector>   ::= (<var> | <range>) ["|" (<var> | <range>)]*
+<range>      ::= [<var>] ".." [<var>]
+<var>        ::= variable index staring from 0 or variable name
+<cmd>        ::= "in"|"out"|"addval"|"delval"|"IMP"|("DIS" <dzcmd>)
+<dzcmd>      ::= ["AFTER" number] ("EQW"|"EQW_NH"|"DIS"|"NOM"|"KM")
+<args>       ::= all kind of stuff separated by whitespace
+
+Even if teh syntax says ";", "|", ".." and "::", these can be also
+changed by command line arguments (handy if your variable names happen
+to use these characters.)
+
+(dispoint.py has source code for discretization commands) 
+
+"AFTER number" means that if the variable has more than "number"
+numerical values, then the command is applied, otherwise the values
+are not discretized. The default discretization command is 
+"- :: AFTER 6 EQW 4" meaning if any variable has more than 6 numerical values,
+discretize them to 4 bins of equal width.
+
+
+Some semantics:
+ 
+-"in" and "out" are used to control what variables are included
+-"addval" and "delval" are used to add values to the variables
+- "IMP" is the imputation method to impute missing values, 
+   currently only "GI [seed]" is supported. In that every variable
+   is randomly imputed independently of others using the relative frequences
+   of discretized values.
+
+Some semantics of the discretization commands:
+
+EQW n     # equal width in n bins
+EQW_NH n  # EQW but do not leave empty bins
+KM n      # K-means to n bins
+NOM       # do not discretize
+DIS x y z # use x,y and z as discretization points
+
+Commads cascade later ones overruling previous ones
+
+Examples:
+
+Let us say we have 10 attributes (V1, V2, V10). Possible commands are:
+
+0, 6..8 :: out       # let us take the first, 7th, 8th and 9th variable out
+..      :: DIS EQW 3 # Discretize all in 3 equal width bins
+..V3    :: DIS KM 3  # But use K-means to discretize V2 and V3 in 3 bins
+
+
+... Should write more but running out of gas. ...
+
+
+There is a preliminary cgi-interface to the tool in www/cgi-bin.
+
+I have used it with thttpd-server with config file
+
+-------------
+port=8040
+user=www-data
+logfile=/var/log/thttpd.log
+throttles=/etc/thttpd/throttle.conf
+dir=/home/tsilande/projects/pydida/www
+cgipat=/cgi-bin/**
+--------------
+
+You have to change the paths in www/cgi-bin/cfg.py too to make it
+work.  And then you probably need to remove tmplc-files from
+www/templates and ensure that directory has (initally) enough
+privileges for www-server to recreate them there. And then 
+you have to create the session data directory (mentioned in cgf.py)
+yourself and give www-server rights to create directories under it.
+
+
+SORRY this is such a mess, please ask lot of questions since there
+are certainly many important things I forget to mention.
+
+ts.
+
