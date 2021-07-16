@@ -1,5 +1,4 @@
-#!/usr/bin/python
-
+#!/usr/bin/env python
 if __name__ == "__main__":
     import os, sys
     import din, diz, dout, varset, varcmd

@@ -1,5 +1,4 @@
-#!/usr/bin/python
-
+#!/usr/bin/env python
 from itertools import chain, imap, repeat
 import re, coliche
 

@@ -1,5 +1,4 @@
-#!/usr/bin/python
-
+#!/usr/bin/env python
 from math import ceil, floor, log10
 from dispoint import seqzip
 
@@ -22,33 +21,51 @@ def allints(vals):
         if not isinstance(v, int): return False
     return True
 
-def prngs(cmd,bc,vals,divs):
+def int_range(x,y):
+    if (x+1>=y):
+        return "%d" % x
+    else:
+        return "[%d .. %d]" % (x,y)
+
+def prngs(cmd,bc,vals,divs, use_limits):
     if bc == 0 : return []
     if cmd == 'NOM' or oneach(vals, divs):
         return map(str, vals)
 
     pivs = []
+    min_val, max_val = vals[0], vals[-1]
     if allints(vals):
         dints = map(int ,map(floor, divs))
-        pivs.append(".. %d" % dints[0])
-        pivs.extend([x+1<y and "%d .. %d" % (x+1,y) or "%d" % x
-                     for x,y in seqzip(dints)])
-        pivs.append("%d .." % dints[-1])
+        if use_limits:
+            pivs.append(int_range(min_val, dints[0]))
+            pivs.extend([int_range(x+1,y) for x,y in seqzip(dints)])
+            pivs.append(int_range(dints[-1]+1, max_val))
+        else:
+            pivs.append(".. %d" % dints[0])
+            pivs.extend([x+1<y and "%d .. %d" % (x+1,y) or "%d" % x
+                         for x,y in seqzip(dints)])
+            pivs.append("%d .." % dints[-1])
     else:
-	fmt = "%%.%df" % niceprec(map(float,vals))
-        pivs.append("].. %s]" % fmt % divs[0])
-        pivs.extend(["]%s .. %s]" %(fmt,fmt) % (x,y)
-                     for x,y in seqzip(divs)])
-        pivs.append("]%s ..[" %fmt % divs[-1])
+    	fmt = "%%.%df" % niceprec(map(float,vals))
+        if use_limits:
+            pivs.append("[%s .. %s]" % (fmt,fmt) % (min_val, divs[0]))
+            pivs.extend(["]%s .. %s]" %(fmt,fmt) % (x,y)
+                        for x,y in seqzip(divs)])
+            pivs.append("]%s .. %s]" % (fmt,fmt) % (divs[-1], vals[-1]))
+        else:
+            pivs.append("].. %s]" % fmt % divs[0])
+            pivs.extend(["]%s .. %s]" %(fmt,fmt) % (x,y)
+                        for x,y in seqzip(divs)])
+            pivs.append("]%s ..[" % fmt % divs[-1])
 
     return pivs
 
-def vald(vn, ana, dsp):
+def vald(vn, ana, dsp, use_limits):
     nvals, nfreqs = ana['nvals'] and zip(*ana['nvals']) or ([],[])
     avals, afreqs = ana['avals'] and zip(*ana['avals']) or ([],[])
     return {"name": vn,
-            "vds" : prngs(dsp["cmd"], dsp["binc"],
-                          nvals, dsp["divs"]) + list(avals)}
+            "vds" : prngs(dsp["cmd"], dsp["binc"], nvals, dsp["divs"], 
+                    use_limits) + list(avals)}
 
 def main(anafn, cmdfn, dspfn, vdfile) :
     genmain((anafn,cmdfn,dspfn), (vdfile,), vald, ())

@@ -1,5 +1,4 @@
-#!/usr/bin/python
-import sys, pickle
+#!/usr/bin/env pythonimport sys, pickle
 import coliche
 
 def main(filename):

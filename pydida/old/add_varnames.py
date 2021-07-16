@@ -1,5 +1,4 @@
-#!/usr/bin/python
-
+#!/usr/bin/env python
 # infile in unix format - not transposed
 
 def main(infile, outfile, sep=None):

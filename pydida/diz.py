@@ -1,5 +1,4 @@
-#!/usr/bin/python
-
+#!/usr/bin/env python
 from datana         import tfields, fanas
 from dispoint       import disp, dsp2line
 from adis2vd        import vald
@@ -11,10 +10,10 @@ import varset, varcmd, vars
 
 import os
 
-def lin(vn, l, ana, tl, dzcmd, impcmd, outfs):
+def lin(vn, l, ana, tl, dzcmd, impcmd, use_limits, outfs):
     
     dsp = disp(ana, dzcmd)
-    vd  = vald(vn, ana, dsp)
+    vd  = vald(vn, ana, dsp, use_limits)
     nfields = dat(vd, ana, dsp, tfields(l, tl))
     freqs   = hst(nfields, vd)
     if ana['misc'] and impcmd:
@@ -29,7 +28,7 @@ def lin(vn, l, ana, tl, dzcmd, impcmd, outfs):
 
 def diz(vnfile, dfn, anafile, typfile, resdn,
         commands      = "",  cmd_file      = None,
-        Imputation    = None,
+        Imputation    = None, Limits = False,
         **sx ):
 
     diradd = lambda x : os.path.join(resdn, x)
@@ -49,11 +48,12 @@ def diz(vnfile, dfn, anafile, typfile, resdn,
 
     for (vn, vcmd, l, ana, tl) in izip(vns, vscmds, file(dfn),
                                        fanas(anafile), file(typfile)):
-        lin(vn, l, ana, tl, vcmd['DIS'], vcmd.get('IMP', None), outfs)
+        lin(vn, l, ana, tl, vcmd['DIS'], vcmd.get('IMP', None), Limits, outfs)
 
 
 strusage = """
 -I --Imputation Imputation : only GI supported this far
+-L --Limits (bool) : include min and max in value intervals: default: False
 """
 
 if __name__ == "__main__":

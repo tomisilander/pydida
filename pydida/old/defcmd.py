@@ -1,5 +1,4 @@
-#!/usr/bin/python
-
+#!/usr/bin/env python
 from bwutil import *
 
 def defcmd(ana, nomlimit, cmd, cmdarg):

@@ -1,5 +1,4 @@
-#!/usr/bin/python
-
+#!/usr/bin/env python
 # This module checks that the data file conforms to the simple
 # tabular format.
 

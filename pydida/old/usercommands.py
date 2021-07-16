@@ -1,5 +1,4 @@
-#!/usr/bin/python
-
+#!/usr/bin/env python
 from sets import Set, ImmutableSet
 
 class UnknownUserCommand(Exception):

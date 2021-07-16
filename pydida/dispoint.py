@@ -1,5 +1,4 @@
-#!/usr/bin/python
-
+#!/usr/bin/env python
 from exceptions import Exception
 from itertools import izip, ifilter, islice, tee
 
